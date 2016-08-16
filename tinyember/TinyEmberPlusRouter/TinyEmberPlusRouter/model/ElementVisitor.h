@@ -13,6 +13,7 @@ namespace model
    class IntegerParameter;
    class StringParameter;
    class Function;
+   class BooleanParameter;
 
    namespace matrix
    {
@@ -29,6 +30,7 @@ namespace model
    {
    public:
       virtual void visit(Node* element) = 0;
+      virtual void visit(BooleanParameter* element) = 0;
       virtual void visit(IntegerParameter* element) = 0;
       virtual void visit(StringParameter* element) = 0;
       virtual void visit(Function* element) = 0;
