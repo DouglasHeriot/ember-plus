@@ -10,6 +10,7 @@
 // convenience header to include the complete model.
 
 #include "Node.h"
+#include "BooleanParameter.h"
 #include "IntegerParameter.h"
 #include "StringParameter.h"
 #include "Function.h"
