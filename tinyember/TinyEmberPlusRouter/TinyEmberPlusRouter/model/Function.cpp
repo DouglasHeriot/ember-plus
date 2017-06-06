@@ -9,6 +9,10 @@
 
 namespace model
 {
+   Function::Delegate::~Delegate()
+   {
+   }
+
    Function::~Function()
    {
       if(m_delegate != nullptr)
