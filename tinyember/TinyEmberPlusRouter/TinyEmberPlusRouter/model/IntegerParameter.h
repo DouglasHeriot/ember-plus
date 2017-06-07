@@ -8,6 +8,9 @@
 #define __TINYEMBERROUTER_MODEL_INTEGERPARAMETER_H
 
 #include "Parameter.h"
+#include <algorithm>
+#include <string>
+#include <map>
 
 namespace model
 {
@@ -43,9 +46,50 @@ namespace model
       inline int maximum() const { return m_maximum; }
 
       /**
+        * Returns the enumeration string.
+        * @Return The enumeration string.
+        */
+      inline const std::string &enumeration() const { return m_enumeration; }
+
+      /**
+        * Returns the enumeration map.
+        * @Return The enumeration map.
+        */
+      inline const std::map<std::string, int> &enumerationMap() const { return m_enumerationMap; }
+
+      /**
         * Overridden to call the appropriate visit() overload.
         */
       void accept(ElementVisitor* visitor);
+
+      /**
+        * Sets the enumeration property by concatenating the provided strings. The strings 
+        * are separated by a '\n' character.
+        * @param first First element to use in the enumeration.
+        * @param last Points the the first element not being used.
+        */
+      template<typename InputIterator>
+      void setEnumeration(InputIterator first, InputIterator last);
+
+      /**
+        * Sets the enumeration property.
+        * @param enumeration The completed enumeration string containing all entries separated
+        *      by the '\n' character.
+        */
+      void setEnumeration(std::string const& enumeration);
+
+      /**
+        * Sets the enumeration map. The map is used if a provider doesn't use consecutive 
+        * indices for an enumerated parameter. If a map is set, the default enumeration property
+        * must be ignored.
+        * @param first The first enumeration entry containing the name-value pair.
+        * @param last The end of the enumeration entry buffer.
+        * @note The InputIterator must contain a pair of type std::pair<std::string, int>, where
+        *      the string is the enumeration name and the int the enumeration value to send
+        *      to the provider.
+        */
+      template<typename InputIterator>
+      void setEnumerationMap(InputIterator first, InputIterator last);
 
    protected:
       /**
@@ -57,7 +101,35 @@ namespace model
    private:
       int m_minimum;
       int m_maximum;
+      std::string m_enumeration;
+      std::map<std::string, int> m_enumerationMap;
    };
+
+   // Copied from GlowParameterBase.hpp
+   template<typename InputIterator>
+   inline void IntegerParameter::setEnumeration(InputIterator first, InputIterator last)
+   {
+      std::ostringstream stream;
+
+      for(/** Nothing */; first != last; /** Nothing */)
+      {
+            stream << *first++;
+
+            if (first != last)
+               stream << "\n";
+      }
+
+      setEnumeration(stream.str());
+   }
+
+   template<typename InputIterator>
+   inline void IntegerParameter::setEnumerationMap(InputIterator first, InputIterator last)
+   {
+      m_enumerationMap.clear();
+      std::copy(first, last, m_enumerationMap.begin());
+   }
+
+
 }
 
 #endif//__TINYEMBERROUTER_MODEL_INTEGERPARAMETER_H

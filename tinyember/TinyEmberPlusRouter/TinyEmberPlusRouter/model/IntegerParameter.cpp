@@ -13,6 +13,8 @@ namespace model
       : Parameter(number, parent, identifier, notificationSink)
       , m_minimum(minimum)
       , m_maximum(maximum)
+      , m_enumeration()
+      , m_enumerationMap()
    {}
 
    void IntegerParameter::accept(ElementVisitor* visitor)
@@ -26,5 +28,10 @@ namespace model
 
       if(notificationSink != nullptr)
          notificationSink->notifyParameterValueChanged(path(), value());
+   }
+
+   void IntegerParameter::setEnumeration(std::string const& enumeration)
+   {
+      m_enumeration = enumeration;
    }
 }
