@@ -42,18 +42,12 @@ namespace model
         */
       inline void setValue(TValue value)
       {
-         if(value != m_value)
-         {
+         //if(value != m_value)
+         //{
             m_value = value;
             onValueChanged();
-         }
+         //}
       }
-
-   protected:
-      /**
-        * Implement this method in derived classes to issue value change notifications.
-        */
-      virtual void onValueChanged() = 0;
 
       /**
         * Sets the parameter value without invoking the onValueChanged method.
@@ -63,6 +57,12 @@ namespace model
       {
          m_value = value;
       }
+
+   protected:
+      /**
+        * Implement this method in derived classes to issue value change notifications.
+        */
+      virtual void onValueChanged() = 0;
 
    private:
       TValue m_value;
