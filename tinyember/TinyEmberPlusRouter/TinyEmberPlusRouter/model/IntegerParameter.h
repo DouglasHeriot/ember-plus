@@ -126,7 +126,7 @@ namespace model
    inline void IntegerParameter::setEnumerationMap(InputIterator first, InputIterator last)
    {
       m_enumerationMap.clear();
-      std::copy(first, last, m_enumerationMap.begin());
+      m_enumerationMap.insert(first, last);
    }
 
 
