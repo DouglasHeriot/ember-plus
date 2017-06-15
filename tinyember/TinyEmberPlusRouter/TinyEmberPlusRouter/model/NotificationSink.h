@@ -32,6 +32,14 @@ namespace model
       virtual void notifyMatrixConnection(matrix::Matrix* matrix, matrix::Signal* target, void* state) = 0;
 
       /**
+        * Implement this method to handle boolean parameter value changes.
+        * @param parameterPath Path of the parameter that changed.
+        * @param value The new parameter value.
+        */
+      virtual void notifyParameterValueChanged(util::Oid const& parameterPath, bool value) = 0;
+
+
+      /**
         * Implement this method to handle integer parameter value changes.
         * @param parameterPath Path of the parameter that changed.
         * @param value The new parameter value.
